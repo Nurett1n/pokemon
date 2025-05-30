@@ -27,8 +27,15 @@ async def go(ctx):
         await ctx.send(await pokemon.info())  # Pokémon hakkında bilgi gönderilmesi
         image_url = await pokemon.show_img()  # Pokémon resminin URL'sini alma
         if image_url:
-            embed = discord.Embed()  # Gömülü mesajı oluşturma
-            embed.set_image(url=image_url)  # Pokémon'un görüntüsünün ayarlanması
+            name=await pokemon.get_name()
+            color=discord.Color.dark_blue()
+
+            embed = discord.Embed(color=color,title=name.upper())  # Gömülü mesajı oluşturma
+            embed.set_image(url=image_url) 
+            boy=pokemon.height/10
+            kilo=pokemon.weight/10
+            embed.add_field(name="Boy:",value=boy,inline=True)
+            embed.add_field(name="Kilo:",value=kilo,inline=True) # Pokémon'un görüntüsünün ayarlanması
             await ctx.send(embed=embed)  # Görüntü içeren gömülü bir mesaj gönderme
         else:
             await ctx.send("Pokémonun görüntüsü yüklenemedi!")
